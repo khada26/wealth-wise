@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wealth Wise — Board Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="table-felt">
+    <header class="topbar">
+      <div class="brand">
+        <span class="dice-mini" aria-hidden="true">⚄</span>
+        <div>
+          <h1>Wealth Wise</h1>
+          <p>AP9 Economics · 3rd Quarter Board Game</p>
+        </div>
+      </div>
+      <div class="hud">
+        <div class="hud-chip">
+          <span>Player</span>
+          <strong id="playerNameHud">Guest</strong>
+        </div>
+        <div class="hud-chip">
+          <span>Questions</span>
+          <strong id="questionsAnswered">0 / 10</strong>
+        </div>
+        <div class="hud-chip">
+          <span>Score</span>
+          <strong id="score">0</strong>
+        </div>
+        <div class="hud-chip">
+          <span>Space</span>
+          <strong id="currentPosition">START</strong>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="board-wrap">
+        <div class="game-board" id="gameBoard" aria-label="Wealth Wise game board"></div>
+      </section>
+
+      <aside class="side">
+        <article class="instructions-card">
+          <h2>General Instructions</h2>
+          <ol>
+            <li>The player will take a turn rolling the dice.</li>
+            <li>Once rolled, the number shown is how many tiles the player will jump.</li>
+            <li>The landed tile determines the type of question the student will answer.</li>
+            <li>
+              If it lands on <em class="easy">EASY</em>, the questions are multiple choice.
+              If <em class="avg">AVERAGE</em>, the student will answer True or False.
+              If <em class="hard">DIFFICULT</em>, it will be an identification question.
+            </li>
+            <li>Each student must answer a total of <strong>10 questions</strong>.</li>
+            <li>Checking will be done after the whole game and facilitated on the results board.</li>
+          </ol>
+        </article>
+
+        <div class="legend">
+          <div><i class="swatch start"></i> Start</div>
+          <div><i class="swatch easy"></i> Easy · Multiple Choice · +10</div>
+          <div><i class="swatch avg"></i> Average · True / False · +15</div>
+          <div><i class="swatch hard"></i> Difficult · Identification · +25</div>
+        </div>
+
+        <div class="log-card">
+          <h3>Turn log</h3>
+          <ul id="turnLog"></ul>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <div id="setupModal" class="modal show" role="dialog" aria-labelledby="setupTitle">
+    <div class="modal-card setup-card">
+      <p class="eyebrow">Take a seat at the table</p>
+      <h2 id="setupTitle">Wealth Wise</h2>
+      <p class="lead">A classroom board game for economics. Roll, land, and answer 10 questions to finish the round.</p>
+      <label for="playerName">Player name</label>
+      <input id="playerName" type="text" maxlength="24" placeholder="Enter your name" autocomplete="nickname" />
+      <button id="startGame" class="btn primary">Begin the game</button>
+    </div>
+  </div>
+
+  <div id="questionModal" class="modal" role="dialog" aria-labelledby="questionText">
+    <div class="modal-card question-card">
+      <div class="q-head">
+        <span id="questionType" class="badge"></span>
+        <span id="questionMeta" class="q-meta"></span>
+      </div>
+      <p id="questionText" class="question-text"></p>
+      <div id="answerContainer"></div>
+      <div id="feedback" class="feedback" hidden></div>
+      <button id="continueBtn" class="btn primary" hidden>Continue</button>
+    </div>
+  </div>
+
+  <div id="gameOverModal" class="modal" role="dialog" aria-labelledby="resultsTitle">
+    <div class="modal-card results-card">
+      <p class="eyebrow">Teacher checking</p>
+      <h2 id="resultsTitle">Round complete</h2>
+      <p class="lead" id="resultsSummary"></p>
+      <div class="score-banner">
+        <div>
+          <span>Final score</span>
+          <strong id="finalScore">0</strong>
+        </div>
+        <div>
+          <span>Correct</span>
+          <strong id="finalCorrect">0 / 10</strong>
+        </div>
+      </div>
+      <div class="review-wrap">
+        <table class="review-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Type</th>
+              <th>Question</th>
+              <th>Your answer</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody id="reviewBody"></tbody>
+        </table>
+      </div>
+      <button id="playAgain" class="btn primary">Play again</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
